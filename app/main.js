@@ -16,11 +16,25 @@ const loadInitialTemplate = () => {
   const body = document.getElementsByTagName("body")[0];
   body.innerHTML = template;
 };
+
 const getUsers = async () => {
   const response = await fetch("/users");
   const users = await response.json();
   const template = (users) =>
-    `<li>${users.name} ${users.lastname} <button data-id="${users._id}">Eliminar</button></li>`;
+    `<li>
+  ${users.name} ${users.lastname} <button data-id="${users._id}">Eliminar</button>
+    </li>`;
+
+  const userList = document.getElementById("user-list");
+  userList.innerHTML = users.map(user => template(user)).join('');
+  users.forEach(user => {
+    const userNode = document.querySelector(`[data-id="${user._id}"]`);
+    userNode.onclick = async e => {
+      await fetch(`/users/${user._id}`, { method: "DELETE" ,});
+      userNode.parentNode.remove();
+      alert("Eliminado con exito");
+    };
+  });
 };
 const addFormListener = () => {
   const userForm = document.getElementById("user-form");
