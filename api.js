@@ -15,7 +15,7 @@ app.get('/users/:id',User.get)
 
 app.put('/users/:id',User.update)
 app.patch('/users/:id',User.update)
-app.delete('/users/:id',User.destroy)
+app.delete('/usersdelete/:id',User.destroy)
 app.get('/',(req,res) => {
   res.sendFile(`${__dirname}/index.html`)
 })

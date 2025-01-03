@@ -25,9 +25,9 @@ const User ={
     },
     destroy: async (req,res)=>{
         const {id} = req.params
-        const user = await Users.findOne({_id: id})
+        const user = await Users.findOne({_id: id})        
         if(user){
-            user.remove()
+            await  user.deleteOne({_id:id})
         }
         res.sendStatus(204)
     }
